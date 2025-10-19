@@ -1,19 +1,33 @@
 package calculator;
 
 public class StringAddCalculator {
-    public static int add(final String text) throws IllegalAccessException {
+    public static int add(final String text) {
         if(text == null || text.isEmpty()){
             return 0;
         }
 
-        //쉼표 또는 콜론을 구분자로 갖는 문자열
-        String[] tokens = text.split(",|:");
-        int result = textToInt(tokens);
+        int result;
+        if(text.startsWith("//")){ //커스텀 구분자를 갖는 문자열
+            result = addWithCustomDelimiter(text);
+        } else{ //쉼표 또는 콜론을 구분자로 갖는 문자열
+            result = addWithDefaultDelimiter(text);
+        }
 
-        return result; //임시 리턴값
+        return result;
     }
 
-    private static int textToInt(String[] tokens) throws IllegalAccessException {
+    private static int addWithDefaultDelimiter(String text) {
+        String[] tokens = text.split(",|:");
+
+        return textToInt(tokens);
+    }
+
+    private static int addWithCustomDelimiter(String text){
+
+        return 0;
+    }
+
+    private static int textToInt(String[] tokens) {
         int sum = 0;
         for (String token : tokens) {
             if(token.isEmpty()){
@@ -23,7 +37,7 @@ public class StringAddCalculator {
             int number = Integer.parseInt(token);
 
             if(number < 0){
-                throw new IllegalAccessException("음수는 입력할 수 없습니다.");
+                throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
                 //종료해야 함
             }
 

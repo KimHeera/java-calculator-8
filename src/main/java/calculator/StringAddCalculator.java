@@ -25,7 +25,7 @@ public class StringAddCalculator {
     private static int addWithCustomDelimiter(String text){
         String customDelimiter = delimiterExtraction(text);
 
-        text = text.substring(text.indexOf('\n')+2);
+        text = text.substring(text.indexOf('\n')+1);
         String[] tokens = text.split(customDelimiter);
 
         return textToInt(tokens);
@@ -54,6 +54,6 @@ public class StringAddCalculator {
     private static String delimiterExtraction(String text){
         int indexOfDel = text.indexOf('\n');
 
-        return text.substring(1, indexOfDel);
+        return text.substring(2, indexOfDel);
     }
 }

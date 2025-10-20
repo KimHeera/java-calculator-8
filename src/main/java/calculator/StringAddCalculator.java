@@ -32,6 +32,10 @@ public class StringAddCalculator {
         if(matcher.find()){
             String customDelimiter = matcher.group(1);
 
+            if(customDelimiter.isEmpty()){
+                throw new IllegalArgumentException("커스텀 구분자가 존재하지 않습니다.");
+            }
+
             String numWord = text.substring(matcher.end());
 
             String[] tokens = numWord.split(Pattern.quote(customDelimiter));
@@ -39,7 +43,7 @@ public class StringAddCalculator {
             return textToInt(tokens);
         }
 
-        throw new IllegalArgumentException("유효하지 않은 커스텀 구분자입니다.");
+       return 0;
     }
 
     private static int textToInt(String[] tokens) {

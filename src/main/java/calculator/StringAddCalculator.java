@@ -3,7 +3,7 @@ package calculator;
 public class StringAddCalculator {
     public static int add(final String text) {
         if(text == null || text.isEmpty()){
-            return 0;
+            throw new IllegalArgumentException("빈 문자열을 입력할 수 없습니다.");
         }
 
         int result;

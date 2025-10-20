@@ -11,7 +11,7 @@ public class Application {
             int result = StringAddCalculator.add(text);
             System.out.printf("결과 : %d\n", result);
         } catch (IllegalArgumentException e){
-            System.out.println("[ERROR]" + e.getMessage());
+            System.out.println("[ERROR] " + e.getMessage());
         }
 
     }

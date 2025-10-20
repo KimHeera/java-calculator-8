@@ -36,7 +36,7 @@ public class StringAddCalculator {
         for (String token : tokens) {
             String trimmedToken = token.trim();
 
-            if(trimmedToken.isEmpty()){
+            if(!token.equals(trimmedToken)){
                 throw new IllegalArgumentException("공백이 포함될 수 없습니다.");
             }
 

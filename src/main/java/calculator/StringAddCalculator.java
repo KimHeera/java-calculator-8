@@ -37,7 +37,6 @@ public class StringAddCalculator {
             }
 
             String numWord = text.substring(matcher.end());
-
             String[] tokens = numWord.split(Pattern.quote(customDelimiter));
 
             return textToInt(tokens);
@@ -55,12 +54,7 @@ public class StringAddCalculator {
                 throw new IllegalArgumentException("공백이 포함될 수 없습니다.");
             }
 
-            int number;
-            try{
-                number = Integer.parseInt(trimmedToken);
-            } catch (NumberFormatException e){
-                throw new IllegalArgumentException("숫자 이외의 값(" + trimmedToken + ")은 입력할 수 없습니다.");
-            }
+            int number = Integer.parseInt(trimmedToken);
 
             if(number < 0){
                 throw new IllegalArgumentException("음수는 입력할 수 없습니다.");

@@ -34,15 +34,16 @@ public class StringAddCalculator {
     private static int textToInt(String[] tokens) {
         int sum = 0;
         for (String token : tokens) {
-            if(token.isEmpty()){
-                continue;
+            String trimmedToken = token.trim();
+
+            if(trimmedToken.isEmpty()){
+                throw new IllegalArgumentException("공백이 포함될 수 없습니다.");
             }
 
-            int number = Integer.parseInt(token);
+            int number = Integer.parseInt(trimmedToken);
 
             if(number < 0){
                 throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
-                //종료해야 함
             }
 
             sum += number;

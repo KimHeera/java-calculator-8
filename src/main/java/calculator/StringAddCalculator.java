@@ -5,10 +5,6 @@ import java.util.regex.Pattern;
 
 public class StringAddCalculator {
     public static int add(final String text) {
-        if(text == null || text.isEmpty()){
-            return 0;
-        }
-
         int result;
         if(text.startsWith("//")){ //커스텀 구분자를 갖는 문자열
             result = addWithCustomDelimiter(text);

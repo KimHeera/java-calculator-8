@@ -1,9 +1,12 @@
 package calculator;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringAddCalculator {
     public static int add(final String text) {
         if(text == null || text.isEmpty()){
-            throw new IllegalArgumentException("빈 문자열을 입력할 수 없습니다.");
+            return 0;
         }
 
         int result;
@@ -17,16 +20,20 @@ public class StringAddCalculator {
     }
 
     private static int addWithDefaultDelimiter(String text) {
-        String[] tokens = text.split(",|:");
+        String[] tokens = text.split("[,:]");
 
         return textToInt(tokens);
     }
 
     private static int addWithCustomDelimiter(String text){
-        String customDelimiter = delimiterExtraction(text);
+        Pattern pattern = Pattern.compile("//(.*?)\n"); //커스텀 구분자 패턴을 찾는 정규표현식
+        Matcher matcher = pattern.matcher(text);
 
-        text = text.substring(text.indexOf('n') + 1);
-        String[] tokens = text.split(customDelimiter);
+        String customDelimiter = delimiterExtraction(text, matcher);
+
+        String numWord = text.substring(matcher.end());
+
+        String[] tokens = numWord.split(Pattern.quote(customDelimiter));
 
         return textToInt(tokens);
     }
@@ -40,7 +47,12 @@ public class StringAddCalculator {
                 throw new IllegalArgumentException("공백이 포함될 수 없습니다.");
             }
 
-            int number = Integer.parseInt(trimmedToken);
+            int number;
+            try{
+                number = Integer.parseInt(trimmedToken);
+            } catch (NumberFormatException e){
+                throw new IllegalArgumentException("숫자 이외의 값(" + trimmedToken + ")은 입력할 수 없습니다.");
+            }
 
             if(number < 0){
                 throw new IllegalArgumentException("음수는 입력할 수 없습니다.");
@@ -52,13 +64,16 @@ public class StringAddCalculator {
         return sum;
     }
 
-    private static String delimiterExtraction(String text){
-        int indexOfDel = text.indexOf('\\');
-
-        if(indexOfDel < 0){
-            throw new IllegalArgumentException("커스텀 구분자가 존재하지 않습니다.");
+    private static String delimiterExtraction(String text, Matcher matcher){
+        String customDelimiter = "";
+        if(matcher.find()){
+            customDelimiter = matcher.group(1);
         }
 
-        return text.substring(2, indexOfDel);
+        if(customDelimiter.isEmpty()){
+            throw new IllegalArgumentException("유효하지 않은 커스텀 구분자입니다.");
+        }
+
+        return customDelimiter;
     }
 }

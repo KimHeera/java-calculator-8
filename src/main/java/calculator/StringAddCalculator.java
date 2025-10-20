@@ -55,6 +55,10 @@ public class StringAddCalculator {
     private static String delimiterExtraction(String text){
         int indexOfDel = text.indexOf('\\');
 
+        if(indexOfDel < 0){
+            throw new IllegalArgumentException("커스텀 구분자가 존재하지 않습니다.");
+        }
+
         return text.substring(2, indexOfDel);
     }
 }

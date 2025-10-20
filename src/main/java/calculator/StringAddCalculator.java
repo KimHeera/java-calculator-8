@@ -26,16 +26,20 @@ public class StringAddCalculator {
     }
 
     private static int addWithCustomDelimiter(String text){
-        Pattern pattern = Pattern.compile("//(.*?)\n"); //커스텀 구분자 패턴을 찾는 정규표현식
+        Pattern pattern = Pattern.compile("//(.*?)\\\\n"); //커스텀 구분자 패턴을 찾는 정규표현식
         Matcher matcher = pattern.matcher(text);
 
-        String customDelimiter = delimiterExtraction(text, matcher);
+        if(matcher.find()){
+            String customDelimiter = matcher.group(1);
 
-        String numWord = text.substring(matcher.end());
+            String numWord = text.substring(matcher.end());
 
-        String[] tokens = numWord.split(Pattern.quote(customDelimiter));
+            String[] tokens = numWord.split(Pattern.quote(customDelimiter));
 
-        return textToInt(tokens);
+            return textToInt(tokens);
+        }
+
+        throw new IllegalArgumentException("유효하지 않은 커스텀 구분자입니다.");
     }
 
     private static int textToInt(String[] tokens) {
@@ -62,18 +66,5 @@ public class StringAddCalculator {
         }
 
         return sum;
-    }
-
-    private static String delimiterExtraction(String text, Matcher matcher){
-        String customDelimiter = "";
-        if(matcher.find()){
-            customDelimiter = matcher.group(1);
-        }
-
-        if(customDelimiter.isEmpty()){
-            throw new IllegalArgumentException("유효하지 않은 커스텀 구분자입니다.");
-        }
-
-        return customDelimiter;
     }
 }
